@@ -3,14 +3,30 @@ import sqlite3
 from contextlib import contextmanager
 from typing import Generator
 
-# Authoritative database path
-DB_PATH = os.environ.get(
-    "CTF_DB_PATH",
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ctf_quiz.db"))
-)
+import shutil
+
+# Authoritative database path resolver
+def get_db_path() -> str:
+    if os.environ.get("CTF_DB_PATH"):
+        return os.environ["CTF_DB_PATH"]
+    # If on Vercel serverless or read-only filesystem, always use /tmp
+    if os.environ.get("VERCEL") or not os.access(os.path.dirname(os.path.abspath(__file__)), os.W_OK):
+        tmp_db = "/tmp/ctf_quiz.db"
+        if not os.path.exists(tmp_db):
+            repo_db = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ctf_quiz.db"))
+            if os.path.exists(repo_db):
+                try:
+                    shutil.copyfile(repo_db, tmp_db)
+                except Exception as e:
+                    print(f"[Seed DB Copy Warning]: {e}")
+        return tmp_db
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ctf_quiz.db"))
+
 def get_connection() -> sqlite3.Connection:
     """Create and configure a SQLite connection with WAL mode and foreign keys enabled."""
-    conn = sqlite3.connect(DB_PATH, timeout=10.0)
+    db_file = get_db_path()
+    os.makedirs(os.path.dirname(db_file), exist_ok=True)
+    conn = sqlite3.connect(db_file, timeout=10.0)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON;")
     if os.environ.get("VERCEL"):
@@ -50,7 +66,8 @@ def get_db() -> Generator[sqlite3.Connection, None, None]:
 def init_db() -> None:
     """Initialize database tables, constraints, and indexes."""
     global _DB_INITIALIZED
-    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    db_file = get_db_path()
+    os.makedirs(os.path.dirname(db_file), exist_ok=True)
     conn = get_connection()
     try:
         cursor = conn.cursor()
