@@ -75,6 +75,12 @@ async def global_exception_handler(request: Request, exc: Exception):
 app.include_router(contestant_router)
 app.include_router(admin_router)
 
+@app.get("/")
+@app.get("/api")
+def root_status():
+    """System status endpoint."""
+    return {"status": "ok", "platform": "Cybersecurity CTF Quiz Platform", "docs": "/api/docs"}
+
 @app.get("/api/health")
 def health_check():
     """System health check endpoint."""
