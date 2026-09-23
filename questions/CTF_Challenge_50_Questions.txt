@@ -1,0 +1,323 @@
+Section / Tier	Question Range	Marks per Question	Total Marks
+Section A (Easy)	Q1 - Q15 (15 Qs)	2 Marks	30 Marks
+Section B (Medium)	Q16 - Q30 (15 Qs)	2 Marks	30 Marks
+Section C (Hard)	Q31 - Q50 (20 Qs)	2 Marks	40 Marks
+
+EASY LEVEL (15 Questions | 30 Marks)
+Q1. What is the standard port used by default for SSH connections?
+A) 21
+B) 22
+C) 23
+D) 80
+
+Q2. Which encoding scheme uses a 64-character set (A-Z, a-z, 0-9, +, /) and often ends with '=' padding?
+A) Base32
+B) Base64
+C) Hexadecimal
+D) ROT13
+
+Q3. In Web Exploitation, what does XSS stand for?
+A) Cross-Site Scripting
+B) Cross-Site Security
+C) Cross-Server Scripting
+D) Cyber Site Shield
+
+Q4. Which Linux command is commonly used to inspect human-readable text hidden inside a binary or unknown file?
+A) grep
+B) strings
+C) cat
+D) file
+
+Q5. Decipher the Caesar cipher string 'synt{grfg}' rotated with a key of ROT13:
+A) flag{pass}
+B) flag{test}
+C) ctf_{test}
+D) flag{root}
+
+Q6. Which Wireshark filter syntax displays only HTTP traffic?
+A) port == 80
+B) protocol.http
+C) http
+D) tcp.port = 80
+
+Q7. What is the magic number (first 8 bytes) header of a standard PNG image in hex?
+A) FF D8 FF E0
+B) 89 50 4E 47 0D 0A 1A 0A
+C) 47 49 46 38
+D) 50 4B 03 04
+
+Q8. Which HTTP method is typically used to request data from a specified resource without making modifications?
+A) POST
+B) PUT
+C) GET
+D) DELETE
+
+Q9. What does the SQL payload "' OR '1'='1" achieve during an authentication bypass?
+A) Deletes the users table
+B) Evaluates the query condition to always TRUE
+C) Encrypts database responses
+D) Triggers an automatic server reboot
+
+Q10. Which tool is widely used for network scanning, host discovery, and port enumeration?
+A) John the Ripper
+B) Nmap
+C) Ghidra
+D) Volatility
+
+Q11. What is the output length of an MD5 hash in hexadecimal characters?
+A) 16
+B) 32
+C) 64
+D) 128
+
+Q12. Which file on a web server tells search engine crawlers which pages or files they can or cannot request?
+A) .htaccess
+B) robots.txt
+C) sitemap.xml
+D) web.config
+
+Q13. What is the default subnet mask for a Class C IPv4 network?
+A) 255.0.0.0
+B) 255.255.0.0
+C) 255.255.255.0
+D) 255.255.255.255
+
+Q14. In steganography, what does LSB stand for?
+A) Low System Byte
+B) Least Significant Bit
+C) Large Stego Binary
+D) Linear Shift Buffer
+
+Q15. Which command-line utility in Linux is used to display network routing tables and active network connections?
+A) netstat
+B) ifconfig
+C) ping
+D) traceroute
+
+
+MEDIUM LEVEL (15 Questions | 30 Marks)
+Q16. Which of the following describes an asymmetric encryption algorithm?
+A) AES-256
+B) DES
+C) RSA
+D) ChaCha20
+
+Q17. What vulnerability occurs when an application accepts user input representing a file path without proper sanitization (e.g., '../../etc/passwd')?
+A) Server-Side Request Forgery (SSRF)
+B) Local File Inclusion (LFI) / Path Traversal
+C) Remote Code Execution (RCE)
+D) Cross-Site Request Forgery (CSRF)
+
+Q18. In x86-64 assembly architecture, which register holds the function return address before returning to the caller?
+A) Stored on the Stack (popped by ret into RIP)
+B) RAX
+C) RSP
+D) RBP
+
+Q19. What memory protection mechanism randomizes the memory addresses of the stack, heap, and libraries on each execution?
+A) DEP / NX
+B) ASLR
+C) Stack Canary
+D) PIE
+
+Q20. Which tool is specifically designed for analyzing volatile memory (RAM dumps) in digital forensics?
+A) Autopsy
+B) Volatility
+C) Wireshark
+D) Binwalk
+
+Q21. In JWT (JSON Web Tokens), which component contains the algorithm and token type metadata?
+A) Payload
+B) Header
+C) Signature
+D) Claim
+
+Q22. What XOR operation property ensures that if A ^ B = C, then which of the following is TRUE?
+A) C ^ A = B
+B) C ^ B = A
+C) A ^ A = 0
+D) All of the above
+
+Q23. What is a 'Stack Canary' used for in compiled binaries?
+A) Speeding up function lookups
+B) Detecting buffer overflows before malicious return code executes
+C) Encrypting function arguments
+D) Preventing reverse engineering via decompiler crashes
+
+Q24. In Burp Suite, which module allows automated, customizable brute-force and fuzzing attacks against web endpoints?
+A) Repeater
+B) Intruder
+C) Sequencer
+D) Decoder
+
+Q25. Which HTTP response header prevents a web page from being rendered inside an <iframe> to stop Clickjacking?
+A) X-Frame-Options
+B) Strict-Transport-Security
+C) Content-Type
+D) Access-Control-Allow-Origin
+
+Q26. What is the primary objective of a Padding Oracle Attack?
+A) Decrypting ciphertext without knowing the private/secret key
+B) Overwriting the return pointer on the call stack
+C) Exploiting race conditions in file uploads
+D) Flooding network interfaces with crafted padding bytes
+
+Q27. Which Linux utility extracts firmware images, file systems, and embedded files from binary blobs?
+A) dd
+B) binwalk
+C) strace
+D) ltrace
+
+Q28. In x86 assembly, what does the instruction 'xor eax, eax' accomplish?
+A) Sets eax to -1
+B) Clears/sets eax to 0
+C) Swaps the high and low bytes of eax
+D) Multiplies eax by 2
+
+Q29. What type of vulnerability allows an attacker to induce the backend web application to make HTTP requests to an arbitrary domain chosen by the attacker?
+A) CSRF
+B) SSRF
+C) CORS Misconfiguration
+D) IDOR
+
+Q30. What is an Insecure Direct Object Reference (IDOR)?
+A) An SQL injection in an ORDER BY clause
+B) Accessing objects or user accounts by manipulating an identifier parameter without proper authorization checks
+C) Directly pointing an IP address to a DNS server
+D) A buffer overflow in direct object memory
+
+
+HARD LEVEL (20 Questions | 40 Marks)
+Q31. In Return-Oriented Programming (ROP), what instruction must terminate every gadget to chain execution?
+A) nop
+B) jmp eax
+C) ret
+D) call
+
+Q32. When the RSA public exponent is e = 3 and the same unpadded message m is encrypted and sent to 3 different recipients (n1, n2, n3), which attack recovers m?
+A) Wiener's Small Private Exponent Attack
+B) Håstad's Broadcast Attack using the Chinese Remainder Theorem
+C) Common Modulus Attack
+D) Factoring via Pollard's p-1
+
+Q33. In x86-64 Linux calling conventions (System V AMD64 ABI), what order are the first 3 integer/pointer function arguments passed into registers?
+A) RDI, RSI, RDX
+B) RAX, RBX, RCX
+C) RSI, RDI, RBP
+D) RDX, RCX, R8
+
+Q34. What glibc heap exploitation technique involves corrupting the forward pointer (fd) of a freed fastbin chunk to allocate a chunk at an arbitrary address?
+A) Fastbin Dup / Fastbin Poisoning
+B) Off-by-one NULL byte overwrite
+C) House of Force
+D) Unsorted Bin Attack
+
+Q35. What is the core condition that enables Wiener's Attack on an RSA key pair?
+A) The modulus N is small (< 512 bits)
+B) The private exponent d satisfies d < (1/3) * N^(1/4)
+C) The public exponent e is extremely large (e > N)
+D) The primes p and q are identical
+
+Q36. In Web security, which template engine vulnerability allows remote command execution via payloads like '{{self._TemplateReference__context.cycler.__init__.__globals__.os.popen('id').read()}}'?
+A) PHP Object Injection
+B) Jinja2 (SSTI - Server-Side Template Injection)
+C) Smarty Template Injection
+D) XPath Injection
+
+Q37. What vulnerability occurs when deserializing unvalidated user input in Python using the 'pickle' module?
+A) Memory leak
+B) Arbitrary code execution via the __reduce__ method
+C) SQL query corruption
+D) Type confusion leading to stack exhaustion
+
+Q38. In Linux dynamic linking, what mechanism resolves PLT/GOT relocations immediately at startup rather than lazily, neutralizing many GOT overwrite techniques?
+A) Partial RELRO
+B) Full RELRO (Bind Now)
+C) PIE (Position Independent Executable)
+D) NX / No-Execute bit
+
+Q39. In Diffie-Hellman Key Exchange over modular prime groups, which mathematical problem provides the computational hardness of key recovery?
+A) Integer Factorization Problem
+B) Discrete Logarithm Problem
+C) Shortest Vector Problem (SVP)
+D) Knapsack Problem
+
+Q40. What is a 'Format String' vulnerability exploit conversion specifier that writes the count of characters output so far into arbitrary memory?
+A) %x
+B) %s
+C) %n
+D) %p
+
+Q41. What type of web attack abuses discrepancies between front-end reverse proxies and backend servers in parsing Content-Length and Transfer-Encoding headers?
+A) HTTP Request Smuggling
+B) HTTP Response Splitting
+C) Cross-Site WebSocket Hijacking
+D) Cache Poisoned Denial of Service
+
+Q42. In modern Glibc heap implementations (2.26+), which caching mechanism handles small-size heap chunks per-thread without locking before checking fastbins?
+A) Unsorted bin
+B) Tcache (Thread Local Cache)
+C) Small bin
+D) Top chunk
+
+Q43. What is the primary cryptographic weakness of using AES in Electronic Codebook (ECB) mode?
+A) Inability to parallelize encryption
+B) Identical plaintext blocks produce identical ciphertext blocks, leaking structural patterns
+C) High vulnerability to padding oracle attacks
+D) Short key space of 64 bits
+
+Q44. What does the system call 'ptrace(PTRACE_TRACEME, ...)' typically achieve when executed in a binary during reverse engineering?
+A) Dynamic stack allocation
+B) Anti-debugging protection (preventing debuggers like GDB from attaching)
+C) Self-decryption of .text section
+D) Bypassing ASLR
+
+Q45. When analyzing a compromised Windows endpoint, where are executed program records, execution counts, and timestamps stored in the registry for user artifact analysis?
+A) SAM Hive
+B) UserAssist keys (HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist)
+C) SYSTEM\CurrentControlSet\Services
+D) BCD (Boot Configuration Data)
+
+Q46. In Blind SQL Injection where error messages and response texts are suppressed, which technique extracts data character-by-character based on server response latency?
+A) Time-Based Blind using functions like pg_sleep() or SLEEP()
+B) Out-of-band ICMP redirect
+C) Second-Order Table Dropping
+D) Heap spray injection
+
+Q47. What vulnerability pattern in smart contracts occurs when an external call is made to an untrusted contract before internal state variables are updated?
+A) Integer Underflow
+B) Reentrancy Attack
+C) Front-running / MEV extraction
+D) Short Address Attack
+
+Q48. In elliptic curve cryptography, what attack applies when an implementation accepts arbitrary points without validating that they lie on the defined curve?
+A) Invalid Curve Attack / Small Subgroup Attack
+B) Side-channel power trace attack
+C) Bleichenbacher Attack
+D) Dual EC DRBG Backdoor
+
+Q49. In a ret2libc attack on an x86-64 binary, why is an extra dummy 'ret' gadget frequently inserted before the 'system()' call in the ROP chain?
+A) To reset the canary value
+B) To satisfy the 16-byte stack alignment requirement for SIMD/SSE instructions in glibc
+C) To pass /bin/sh as the second argument
+D) To bypass the NX bit
+
+Q50. What is the significance of the '__attribute__((constructor))' function attribute in GCC/Clang compiled binaries?
+A) It marks functions to run automatically before main() executes
+B) It enforces read-only access on the heap
+C) It destroys debugging symbols at compile time
+D) It causes the program to crash upon dynamic inspection
+
+
+QUICK MASTER ANSWER KEY SUMMARY
+Cols 1 - 10	Cols 11 - 20	Cols 21 - 30	Cols 31 - 40	Cols 41 - 50
+Q01:  [ B ]	Q11:  [ B ]	Q21:  [ B ]	Q31:  [ C ]	Q41:  [ A ]
+Q02:  [ B ]	Q12:  [ B ]	Q22:  [ D ]	Q32:  [ B ]	Q42:  [ B ]
+Q03:  [ A ]	Q13:  [ C ]	Q23:  [ B ]	Q33:  [ A ]	Q43:  [ B ]
+Q04:  [ B ]	Q14:  [ B ]	Q24:  [ B ]	Q34:  [ A ]	Q44:  [ B ]
+Q05:  [ B ]	Q15:  [ A ]	Q25:  [ A ]	Q35:  [ B ]	Q45:  [ B ]
+Q06:  [ C ]	Q16:  [ C ]	Q26:  [ A ]	Q36:  [ B ]	Q46:  [ A ]
+Q07:  [ B ]	Q17:  [ B ]	Q27:  [ B ]	Q37:  [ B ]	Q47:  [ B ]
+Q08:  [ C ]	Q18:  [ A ]	Q28:  [ B ]	Q38:  [ B ]	Q48:  [ A ]
+Q09:  [ B ]	Q19:  [ B ]	Q29:  [ B ]	Q39:  [ B ]	Q49:  [ B ]
+Q10:  [ B ]	Q20:  [ B ]	Q30:  [ B ]	Q40:  [ C ]	Q50:  [ A ]
