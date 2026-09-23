@@ -20,9 +20,23 @@ def get_connection() -> sqlite3.Connection:
     conn.execute("PRAGMA busy_timeout = 5000;")
     return conn
 
+_DB_INITIALIZED = False
+
+def ensure_db_initialized() -> None:
+    global _DB_INITIALIZED
+    if not _DB_INITIALIZED:
+        init_db()
+        try:
+            from .import_questions import import_questions_to_db
+            import_questions_to_db(force=False)
+        except Exception as e:
+            print(f"[Lazy Import Note]: {e}")
+        _DB_INITIALIZED = True
+
 @contextmanager
 def get_db() -> Generator[sqlite3.Connection, None, None]:
     """Context manager for SQLite database connections."""
+    ensure_db_initialized()
     conn = get_connection()
     try:
         yield conn
@@ -35,8 +49,10 @@ def get_db() -> Generator[sqlite3.Connection, None, None]:
 
 def init_db() -> None:
     """Initialize database tables, constraints, and indexes."""
+    global _DB_INITIALIZED
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-    with get_db() as conn:
+    conn = get_connection()
+    try:
         cursor = conn.cursor()
         
         # 1. Teams table
@@ -172,3 +188,6 @@ def init_db() -> None:
             details TEXT
         );
         """)
+        conn.commit()
+    finally:
+        conn.close()

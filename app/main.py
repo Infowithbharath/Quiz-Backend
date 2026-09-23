@@ -63,14 +63,22 @@ async def global_exception_handler(request: Request, exc: Exception):
     Prevents leakage of tracebacks, database paths, SQL query details, or secrets.
     """
     if isinstance(exc, HTTPException):
-        return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
-    # Log exception internally, but return generic error to client
-    import logging
-    logging.exception("Unhandled server exception occurred: %s", str(exc))
-    return JSONResponse(
-        status_code=500,
-        content={"detail": "Internal server error"}
-    )
+        res = JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+    else:
+        import logging
+        import traceback
+        logging.exception("Unhandled server exception: %s", str(exc))
+        res = JSONResponse(
+            status_code=500,
+            content={"detail": str(exc) or "Internal server error"}
+        )
+    origin = request.headers.get("origin")
+    if origin:
+        res.headers["Access-Control-Allow-Origin"] = origin
+        res.headers["Access-Control-Allow-Credentials"] = "true"
+        res.headers["Access-Control-Allow-Headers"] = "*"
+        res.headers["Access-Control-Allow-Methods"] = "*"
+    return res
 
 # Register API Routers
 app.include_router(contestant_router)
