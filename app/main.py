@@ -22,10 +22,21 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Cybersecurity CTF Quiz Platform API",
     version="1.0.0",
-    docs_url="/api/docs",
+    docs_url="/docs",
+    openapi_url="/openapi.json",
     redoc_url=None,
     lifespan=lifespan
 )
+
+@app.get("/api/docs", include_in_schema=False)
+def api_docs():
+    from fastapi.openapi.docs import get_swagger_ui_html
+    return get_swagger_ui_html(openapi_url="/api/openapi.json", title="Cybersecurity CTF API Docs")
+
+@app.get("/api/openapi.json", include_in_schema=False)
+def api_openapi():
+    from fastapi.openapi.utils import get_openapi
+    return get_openapi(title=app.title, version=app.version, routes=app.routes)
 
 # Explicit CORS Origins for Contestant (5173) and Administrator (5174)
 app.add_middleware(
