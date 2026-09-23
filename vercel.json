@@ -1,13 +1,8 @@
 {
-  "functions": {
-    "api/index.py": {
-      "includeFiles": "{questions/**,app/**}"
-    }
-  },
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/api/index.py?__p__=$1"
+      "source": "/api/(.*)",
+      "destination": "/api"
     }
   ]
 }
