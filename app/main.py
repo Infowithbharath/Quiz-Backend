@@ -10,9 +10,12 @@ from .routers import contestant_router, admin_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifespan context to safely initialize the SQLite database and verify 50 questions."""
-    init_db()
-    imported_count = import_questions_to_db(force=False)
-    print(f"[CTF Platform] Database initialized. Verified {imported_count} authoritative questions in SQLite.")
+    try:
+        init_db()
+        imported_count = import_questions_to_db(force=False)
+        print(f"[CTF Platform] Database initialized. Verified {imported_count} authoritative questions in SQLite.")
+    except Exception as e:
+        print(f"[CTF Platform] Startup initialization note: {e}")
     yield
     print("[CTF Platform] Shutting down backend.")
 
