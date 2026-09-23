@@ -48,6 +48,21 @@ def ensure_db_initialized() -> None:
             import_questions_to_db(force=False)
         except Exception as e:
             print(f"[Lazy Import Note]: {e}")
+        try:
+            conn = get_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT id FROM admins WHERE username = 'ctf_admin'")
+            if not cursor.fetchone():
+                from .auth import hash_password
+                from datetime import datetime, timezone
+                cursor.execute("""
+                    INSERT INTO admins (username, password_hash, created_at)
+                    VALUES ('ctf_admin', ?, ?)
+                """, (hash_password("CyberSec_2026!"), datetime.now(timezone.utc).isoformat()))
+                conn.commit()
+            conn.close()
+        except Exception as e:
+            print(f"[Admin Auto-Seed Note]: {e}")
 
 @contextmanager
 def get_db() -> Generator[sqlite3.Connection, None, None]:

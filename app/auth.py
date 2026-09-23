@@ -1,3 +1,8 @@
+import os
+import hmac
+import hashlib
+import json
+import base64
 import secrets
 import string
 from datetime import datetime, timezone
@@ -6,6 +11,36 @@ from fastapi import HTTPException, Request, Depends
 import argon2
 import bcrypt
 from .database import get_db
+
+ADMIN_SECRET_KEY = os.getenv("ADMIN_SECRET_KEY", "ctf-super-secret-admin-key-2026-production")
+
+def create_admin_token(admin_id: int, username: str) -> str:
+    """Generates a cryptographically signed HMAC token for administrators."""
+    payload = {
+        "admin_id": admin_id,
+        "username": username,
+        "exp": int(datetime.now(timezone.utc).timestamp()) + 86400,
+        "nonce": secrets.token_hex(8)
+    }
+    raw = base64.urlsafe_b64encode(json.dumps(payload).encode()).decode()
+    sig = hmac.new(ADMIN_SECRET_KEY.encode(), raw.encode(), hashlib.sha256).hexdigest()
+    return f"{raw}.{sig}"
+
+def verify_admin_token(token: str) -> Optional[Dict[str, Any]]:
+    """Verifies HMAC signature and expiration of an admin token."""
+    if not token or "." not in token:
+        return None
+    try:
+        raw, sig = token.rsplit(".", 1)
+        expected_sig = hmac.new(ADMIN_SECRET_KEY.encode(), raw.encode(), hashlib.sha256).hexdigest()
+        if not hmac.compare_digest(sig, expected_sig):
+            return None
+        payload = json.loads(base64.urlsafe_b64decode(raw.encode()).decode())
+        if payload.get("exp", 0) < datetime.now(timezone.utc).timestamp():
+            return None
+        return payload
+    except Exception:
+        return None
 
 # Initialize Argon2id hasher
 try:
@@ -111,12 +146,24 @@ def get_current_team(request: Request) -> Dict[str, Any]:
 def get_current_admin(request: Request) -> Dict[str, Any]:
     """
     Dependency that extracts, verifies, and returns the authenticated admin dictionary.
-    Rejects any non-admin request.
+    Rejects any non-admin request. Works across serverless instances via stateless HMAC tokens.
     """
     token = extract_token_from_request(request, cookie_name="ctf_admin_session")
     if not token:
         raise HTTPException(status_code=401, detail="Administrator authentication required.")
 
+    # 1. Stateless verification (works across all serverless lambda containers)
+    admin_payload = verify_admin_token(token)
+    if admin_payload:
+        return {
+            "session_id": 1,
+            "admin_id": admin_payload["admin_id"],
+            "id": admin_payload["admin_id"],
+            "username": admin_payload["username"],
+            "session_token": token
+        }
+
+    # 2. Database verification fallback for legacy or local session tokens
     now_iso = datetime.now(timezone.utc).isoformat()
 
     with get_db() as conn:

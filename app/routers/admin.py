@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 from fastapi import APIRouter, HTTPException, Depends, Request, Response
 from ..database import get_db
 from ..security import admin_rate_limiter
-from ..auth import verify_password, get_current_admin
+from ..auth import verify_password, get_current_admin, create_admin_token
 from ..admin import (
     get_admin_statistics,
     get_admin_ranking,
@@ -41,7 +41,7 @@ def admin_login(req: AdminLoginRequest, request: Request, response: Response):
         admin_id = admin_row["id"]
         username = admin_row["username"]
 
-        session_token = secrets.token_hex(32)
+        session_token = create_admin_token(admin_id, username)
         cursor.execute("""
             INSERT INTO admin_sessions (admin_id, session_token, login_time, last_activity, active)
             VALUES (?, ?, ?, ?, 1)
