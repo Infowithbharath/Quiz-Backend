@@ -85,3 +85,14 @@ def root_status():
 def health_check():
     """System health check endpoint."""
     return {"status": "ok", "platform": "Cybersecurity CTF Quiz Platform", "version": "1.0.0"}
+
+@app.api_route("/{full_path:path}", methods=["GET", "POST"])
+def catch_all(request: Request, full_path: str):
+    return {
+        "requested_url": str(request.url),
+        "fastapi_seen_path": request.url.path,
+        "full_path_param": full_path,
+        "x_matched_path": request.headers.get("x-matched-path"),
+        "x_forwarded_uri": request.headers.get("x-forwarded-uri"),
+        "available_routes": [getattr(r, "path", str(r)) for r in app.routes]
+    }
