@@ -41,13 +41,13 @@ _DB_INITIALIZED = False
 def ensure_db_initialized() -> None:
     global _DB_INITIALIZED
     if not _DB_INITIALIZED:
+        _DB_INITIALIZED = True
         init_db()
         try:
             from .import_questions import import_questions_to_db
             import_questions_to_db(force=False)
         except Exception as e:
             print(f"[Lazy Import Note]: {e}")
-        _DB_INITIALIZED = True
 
 @contextmanager
 def get_db() -> Generator[sqlite3.Connection, None, None]:
